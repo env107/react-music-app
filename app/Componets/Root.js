@@ -21,6 +21,11 @@ class Root extends React.Component{
 
     } 
 
+    updateProgress(value){
+        var duration = this.state.player.progress.duration;
+       $("#player").jPlayer("play",duration*value);
+    }
+
 
     componentWillUnmount(){
         $("#player").unbind($.jPlayer.event.timeupdate);
@@ -54,8 +59,6 @@ class Root extends React.Component{
                     } 
                 })
             });
-
-           // 
         });
     }
 
@@ -63,7 +66,7 @@ class Root extends React.Component{
         return (
             <div>
                 <Header />
-                <Progress info={this.state.player} progress={this.state.player.progress.percent}  />
+                <Progress color="#25F1E0" UpdateProgress={(value)=>this.updateProgress(value)} progress={this.state.player.progress.percent}  />
             </div>
             
         );
