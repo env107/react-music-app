@@ -1,0 +1,61 @@
+.Player-Panel{
+    background: #fff;
+    width:100%;
+    margin:0 auto;
+    height:600px;
+    display: flex;
+    .Cover-Box{
+        .CoverImage{
+            width:120px;
+            height:120px;
+        }
+    }
+    .Info-Box{
+        width: 100%;
+        font-size:16px;
+        font-weight: normal;
+        .info-title{
+            margin:10px;
+            margin-bottom: 8px;
+        }
+        .info-control{
+            .control-button{
+                background: url(/static/images/icons.png);
+                width:32px;
+                height: 32px;
+                display: inline-block;
+                background-size: 32px auto;
+            }
+            i{
+                cursor: pointer;
+            }
+            i.prev{
+                background-position: 0 0;
+            }
+            i.next{
+                background-position: 0 -32px;
+            }
+            i.pause{
+                background-position: 0 -64px;
+            }
+            i.play{
+                background-position: 0 -96px;
+            }
+            i.loop{
+                background-position: 0 -128px;
+            }
+            i.queue{
+                background-position: 0 -160px;
+            }
+            i.random{
+                background-position: 0 -192px;
+            }
+            i.volume{
+                background-position: 0 -224px;
+            }
+        }
+
+    }
+}
+
+

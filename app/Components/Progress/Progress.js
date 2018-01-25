@@ -34,7 +34,7 @@ class Progress extends React.Component{
 
     render(){
         return (
-            <div className="progress-Component" ref={(progressBar)=>{this.progressBar=progressBar}} onClick={this.progressBarChange} >
+            <div className="progress-Component" style={{width:`${this.props.width}%`}} ref={(progressBar)=>{this.progressBar=progressBar}} onClick={this.progressBarChange} >
                 <div className="progressBar"    >
                     <div className="progress" style={{width:`${this.props.progress}%`,background:`${this.props.color}`}} ></div>
                 </div>
