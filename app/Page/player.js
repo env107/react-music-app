@@ -61,12 +61,12 @@ class Player extends Component{
             var long = Math.round(jPlayer.status.duration);
             var percent = Math.round(jPlayer.status.currentPercentAbsolute);
             var volume = jPlayer.options.volume*100;
+           // console.log(jPlayer);
            if(jPlayer.status.ended){
                setTimeout(function(){
                    this.play(0);
                }.bind(this),1000)
                
-               console.log("播放已停止");
            }
             this.setState({
                 playerState:Object.assign({},this.state.playerState,
@@ -80,27 +80,52 @@ class Player extends Component{
         });
     }
 
+    formatMusicTime(duration){
+        var theTime = parseInt(duration);// 秒
+        var theTime1 = 0;// 分
+        if(theTime > 60) {
+            theTime1 = parseInt(theTime/60);
+            theTime = parseInt(theTime%60);
+                if(theTime1 > 60) {
+                theTime1 = parseInt(theTime1%60);
+                }
+        }
+            var result = ""+this.getFullNumber(parseInt(theTime));
+        
+            result = ""+this.getFullNumber(parseInt(theTime1))+":"+result;
+          
+
+        return result;
+    }
+
+    getFullNumber(number){
+        return number<10?"0"+number:number;
+    }
+
 
     render(){
 
         const {mid,cover,title,art,desc,url,type} = this.state.data;
         const {playerState,isPlay} = this.state;
-
-
+        let music_duration = this.formatMusicTime(playerState.duration);
+        let music_current = this.formatMusicTime(playerState.current);
+    
         return (
             <div className="Player-Page">
-                
                 <div className="Player-Panel">
                     <div className="Cover-Box">
                         <img src={cover} alt={title} className="CoverImage" />
                     </div>
                     <div className="Info-Box">
-                        <div className="info-title">{title} - {art} ({playerState.duration})</div>
+                        <div className="info-title">
+                            <div className="info-title-text">{title} - {art} </div>
+                            <div className="info-time-text">{music_current}/{music_duration}</div>
+                        </div>
                         <div className="info-progress">
-                            <Progress color="#25F1E0" UpdateProgress={(value)=>this.updateProgress(value)} progress={playerState.percent}  />
+                            <Progress color="red" UpdateProgress={(value)=>this.updateProgress(value)} progress={playerState.percent}  />
                         </div>
                         <div className="info-control">
-                            <div claas="control-button-group">
+                            <div className="control-button-group">
                                 <i className="control-button prev"></i>
                                 <i className={"control-button " + (isPlay?"play":"pause")} data-control="status" onClick={(e)=>this.ControlHandler(e)}></i>
                                 <i className="control-button next"></i>
@@ -108,7 +133,7 @@ class Player extends Component{
                             <div className="control-volume-control">
                                 <i className="control-button volume"></i>
                                 <div className="control-volume">
-                                    <Progress color="green" UpdateProgress={(value)=>this.updateVolume(value)} progress={playerState.volume}  />
+                                    <Progress color="#aaa" UpdateProgress={(value)=>this.updateVolume(value)} progress={playerState.volume}  />
                                 </div>
                             </div>
                         </div>
