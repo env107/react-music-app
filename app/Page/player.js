@@ -1,18 +1,17 @@
 import React,{Component} from "react";
 import Progress from '../Components/Progress/Progress';
-import "./player.less";
+import "./Player.less";
 class Player extends Component{
 
     constructor(props){
         super(props);
-        
+   
         this.state = {
             isPlay:true,
             playerState:{},
             data:this.props.data
         };
 
-        
     }
     //更新控件进度
     updateProgress(value){
@@ -54,6 +53,9 @@ class Player extends Component{
     }
 
     componentDidMount(){
+
+        let state = this.state;
+
         //监听播放事件变更状态
         $("#player").bind($.jPlayer.event.timeupdate,(e)=>{
             var jPlayer = e.jPlayer
@@ -61,12 +63,10 @@ class Player extends Component{
             var long = Math.round(jPlayer.status.duration);
             var percent = Math.round(jPlayer.status.currentPercentAbsolute);
             var volume = jPlayer.options.volume*100;
-           // console.log(jPlayer);
            if(jPlayer.status.ended){
                setTimeout(function(){
                    this.play(0);
                }.bind(this),1000)
-               
            }
             this.setState({
                 playerState:Object.assign({},this.state.playerState,
@@ -112,10 +112,11 @@ class Player extends Component{
     
         return (
             <div className="Player-Page">
-                <div className="Player-Panel">
-                    <div className="Cover-Box">
+            <div className="Cover-Box">
                         <img src={cover} alt={title} className="CoverImage" />
                     </div>
+                <div className="Player-Panel">
+                    
                     <div className="Info-Box">
                         <div className="info-title">
                             <div className="info-title-text">{title} - {art} </div>

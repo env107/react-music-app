@@ -12,11 +12,11 @@ export const data = {
         },
         {
             mid:2,
-            title:"等你下课 (with 杨瑞代)",
-            art:"周杰伦",
+            title:"反正我信了",
+            art:"信",
             desc:"",
-            type:"flac",
-            url:"/media/周杰伦 - 等你下课 (with 杨瑞代).flac",
+            type:"mp3",
+            url:"/media/信 - 反正我信了.mp3",
             cover:"/static/images/T002R300x300M000003bSL0v4bpKAx.jpg"
         },
         {

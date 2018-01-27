@@ -13,6 +13,7 @@ module.exports = {
         filename:"bundle.js",
    
     },
+    devtool:"eval-source-map",
     devServer:{
         contentBase:"./",
         historyApiFallback:true,
