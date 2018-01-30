@@ -1,7 +1,7 @@
 import React from "react";
 import "./MusicList.less";
 import MusicItem from "../Components/MusicItem/MusicItem";
-
+import {Link} from "react-router-dom";
 class MusicList extends React.Component{
 
     constructor(props){
@@ -22,14 +22,15 @@ class MusicList extends React.Component{
         const data = DataContainer.map((item,index)=>{
             
             return (
+                    <Link to="/" key={index} >
                     <MusicItem 
                         OnItemSelect={(index)=>this.OnItemChange(index)} 
                         OnItemRemove={(index)=>this.OnItemRemove(index)} 
                         Index={index} 
-                        key={index} 
                         Item={item} 
                         Active={CurrentItem === index} 
                      />
+                     </Link>
             );
         });
 

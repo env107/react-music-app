@@ -1,6 +1,7 @@
 import React,{Component} from "react";
 import Progress from '../Components/Progress/Progress';
 import "./Player.less";
+import {Link} from "react-router-dom";
 class Player extends Component{
 
     constructor(props){
@@ -119,7 +120,7 @@ class Player extends Component{
                     
                     <div className="Info-Box">
                         <div className="info-title">
-                            <div className="info-title-text">{title} - {art} </div>
+                            <div className="info-title-text"><Link to="/List">{title} - {art}</Link></div>
                             <div className="info-time-text">{music_current}/{music_duration}</div>
                         </div>
                         <div className="info-progress">

@@ -77,13 +77,9 @@ class App extends React.Component{
         return (
             <div>
                 <Header />
-                
-                     <Route  path="/" render={()=>{
-                        return (
-                            <Player data={data[CurrentItem]}></Player>
-                        );
-                    }} /> 
-                  
+                 <Router>
+                 <div>
+                    <Switch>
                     <Route path="/List" render={()=>{
                          return (
                             <MusicList 
@@ -94,6 +90,16 @@ class App extends React.Component{
                             />
                          );
                     }} /> 
+                     <Route  path="/" render={()=>{
+                        return (
+                            <Player data={data[CurrentItem]}></Player>
+                        );
+                    }} /> 
+                  
+                    
+                    </Switch>
+                    </div>
+                    </Router>
               
             </div>
             
@@ -106,11 +112,11 @@ class Root extends React.Component{
 
     render(){
         return (
-            <Router>
+           
                 <div>   
-                   <Route path="/" component={App} />  
+                   <App />
                 </div>
-            </Router>
+            
             
         );
     }
