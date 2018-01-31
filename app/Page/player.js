@@ -2,6 +2,7 @@ import React,{Component} from "react";
 import Progress from '../Components/Progress/Progress';
 import "./Player.less";
 import {Link} from "react-router-dom";
+import Pubsub from "pubsub-js";
 class Player extends Component{
 
     constructor(props){
@@ -56,7 +57,6 @@ class Player extends Component{
     componentDidMount(){
 
         let state = this.state;
-
         //监听播放事件变更状态
         $("#player").bind($.jPlayer.event.timeupdate,(e)=>{
             var jPlayer = e.jPlayer
@@ -79,12 +79,20 @@ class Player extends Component{
                 })
             });
         });
+
+        
+    }
+
+    changeMode(mode,e){
+        e.stopPropagation();
+        e.preventDefault();
+        Pubsub.publish("CHANGE_MODE",mode);
     }
 
     formatMusicTime(duration){
         var theTime = parseInt(duration);// 秒
         var theTime1 = 0;// 分
-        if(theTime > 60) {
+        if(theTime >= 60) {
             theTime1 = parseInt(theTime/60);
             theTime = parseInt(theTime%60);
                 if(theTime1 > 60) {
@@ -108,9 +116,14 @@ class Player extends Component{
 
         const {mid,cover,title,art,desc,url,type} = this.state.data;
         const {playerState,isPlay} = this.state;
+        const {mode} = this.props;
         let music_duration = this.formatMusicTime(playerState.duration);
         let music_current = this.formatMusicTime(playerState.current);
-    
+        let playMode = mode;
+        if(["loop","queue","random"].indexOf(mode) == -1){
+            playMode = "queue";
+            console.warn("播放模式出错!");
+        }
         return (
             <div className="Player-Page">
             <div className="Cover-Box">
@@ -120,7 +133,7 @@ class Player extends Component{
                     
                     <div className="Info-Box">
                         <div className="info-title">
-                            <div className="info-title-text"><Link to="/List">{title} - {art}</Link></div>
+                            <div className="info-title-text"><Link to="/List">{mid}. {title} - {art}</Link></div>
                             <div className="info-time-text">{music_current}/{music_duration}</div>
                         </div>
                         <div className="info-progress">
@@ -137,6 +150,9 @@ class Player extends Component{
                                 <div className="control-volume">
                                     <Progress color="#aaa" UpdateProgress={(value)=>this.updateVolume(value)} progress={playerState.volume}  />
                                 </div>
+                            </div>
+                            <div className="control-play-control" onClick={e=>this.changeMode(playMode,e)}>
+                                <i className={"control-button "+playMode}></i>
                             </div>
                         </div>
                     </div>

@@ -13,15 +13,7 @@ render(
     
 //实现浏览器不刷新
 if(module.hot){
-    module.hot.accept("./Components/Root",()=>{
-        const Root = require("./Components/Root").default;
-        render(
-            <AppContainer>
-            <Root />
-            </AppContainer>
-            ,
-            document.getElementById("container"));
-    });
+    module.hot.accept();
 }
 
 console.log(React.version);

@@ -1,26 +1,31 @@
 import React from "react";
 import "./MusicItem.less";
-
+import Pubsub from "pubsub-js";
 class MusicItem extends React.Component{
 
+    
 
-    OnItemSelect(itemid){
-        typeof(this.props.OnItemSelect)=="function" && this.props.OnItemSelect(itemid);
+    OnItemSelect(item,e){
+       e.stopPropagation();
+       e.preventDefault();
+       Pubsub.publish("PLAY_MUSIC",item);
     }
 
-    OnItemRemove(itemid){
-        typeof(this.props.OnItemRemove)=="function" && this.props.OnItemRemove(itemid);
+    OnItemRemove(item,e){
+        e.stopPropagation();
+        e.preventDefault();
+        Pubsub.publish("DELETE_MUSIC",item);
     }
 
     render(){
         const {Item,Active,Index} = this.props; 
         return (
                 <li className={`music-list-item ${Active?'music-list-item-active':''}`}>
-                    <div className="item-text"  onClick={()=>this.OnItemSelect(Index)} >
+                    <div className="item-text"  onClick={(e)=>this.OnItemSelect(Item,e)} >
                     {Item.title} - {Item.art}
                     </div>
                     <div className="item-control">
-                        <div onClick={()=>this.OnItemRemove(Index)} className="item-delete-button">x</div>
+                        <div onClick={(e)=>this.OnItemRemove(Item,e)} className="item-delete-button">x</div>
                     </div>
                 </li>
         );
