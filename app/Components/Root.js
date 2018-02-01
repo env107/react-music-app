@@ -50,6 +50,7 @@ class App extends React.Component{
          $("#player").jPlayer({
                 supplied:"mp3",
                 wmode:"window",
+                volume:"100"
         });
         if(CurrentItem.url == undefined){
             alert("该链接不存在!");
@@ -90,6 +91,7 @@ class App extends React.Component{
                 mode = modes[modeIndex];
             }
             switch(mode){
+                case "loop":
                 case "queue":{
                      this.setState(Object.assign({},this.state,{
                          data:nowData
@@ -102,6 +104,7 @@ class App extends React.Component{
                     }));
                     break;
                 }
+                
             }
             that.setState(Object.assign({},that.state,{mode}));
             

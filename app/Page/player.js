@@ -23,7 +23,7 @@ class Player extends Component{
        
     }
     //音量更新
-    updateVolume(value){
+    setVolume(value){
         $("#player").jPlayer("volume",value);
     }
     //按钮
@@ -148,7 +148,7 @@ class Player extends Component{
                             <div className="control-volume-control">
                                 <i className="control-button volume"></i>
                                 <div className="control-volume">
-                                    <Progress color="#aaa" UpdateProgress={(value)=>this.updateVolume(value)} progress={playerState.volume}  />
+                                    <Progress color="#aaa" UpdateProgress={(value)=>this.setVolume(value)} progress={playerState.volume}  />
                                 </div>
                             </div>
                             <div className="control-play-control" onClick={e=>this.changeMode(playMode,e)}>
