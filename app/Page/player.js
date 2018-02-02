@@ -11,7 +11,6 @@ class Player extends Component{
         this.state = {
             isPlay:true,
             playerState:{},
-            data:this.props.data
         };
 
     }
@@ -53,22 +52,26 @@ class Player extends Component{
         $("#player").jPlayer("pause");
         this.setState(Object.assign({},this.state,{isPlay:false}));
     }
+    //停止
+    stop(){
+        $("#player").jPlayer("stop");
+        this.setState(Object.assign({},this.state,{isPlay:false}));
+    }
+
+    componentWillUnmount(){
+        $("#player").unbind($.jPlayer.event.timeupdate);
+    }
 
     componentDidMount(){
 
         let state = this.state;
         //监听播放事件变更状态
-        $("#player").bind($.jPlayer.event.timeupdate,(e)=>{
+        $("#player").unbind($.jPlayer.event.timeupdate).bind($.jPlayer.event.timeupdate,(e)=>{
             var jPlayer = e.jPlayer
             var now = Math.round(jPlayer.status.currentTime);
             var long = Math.round(jPlayer.status.duration);
             var percent = Math.round(jPlayer.status.currentPercentAbsolute);
             var volume = jPlayer.options.volume*100;
-           if(jPlayer.status.ended){
-               setTimeout(function(){
-                   this.play(0);
-               }.bind(this),1000)
-           }
             this.setState({
                 playerState:Object.assign({},this.state.playerState,
                 {
@@ -112,9 +115,16 @@ class Player extends Component{
     }
 
 
+    changeMusic(e,type){
+        e.stopPropagation();
+        e.preventDefault();
+        Pubsub.publish("CHANGE_MUSIC",type);
+    }
+
+
     render(){
 
-        const {mid,cover,title,art,desc,url,type} = this.state.data;
+        const {mid,cover,title,art,desc,url,type} = this.props.data;
         const {playerState,isPlay} = this.state;
         const {mode} = this.props;
         let music_duration = this.formatMusicTime(playerState.duration);
@@ -127,13 +137,13 @@ class Player extends Component{
         return (
             <div className="Player-Page">
             <div className="Cover-Box">
-                        <img src={cover} alt={title} className="CoverImage" />
+                        <img src={cover} alt={title} className="CoverImage rorate-img-action" />
                     </div>
                 <div className="Player-Panel">
                     
                     <div className="Info-Box">
                         <div className="info-title">
-                            <div className="info-title-text"><Link to="/List">{mid}. {title} - {art}</Link></div>
+                            <div className="info-title-text"><Link to="/List">{title} - {art}</Link></div>
                             <div className="info-time-text">{music_current}/{music_duration}</div>
                         </div>
                         <div className="info-progress">
@@ -141,9 +151,9 @@ class Player extends Component{
                         </div>
                         <div className="info-control">
                             <div className="control-button-group">
-                                <i className="control-button prev"></i>
+                                <i className="control-button prev" onClick={e=>this.changeMusic(e,"prev")}></i>
                                 <i className={"control-button " + (isPlay?"play":"pause")} data-control="status" onClick={(e)=>this.ControlHandler(e)}></i>
-                                <i className="control-button next"></i>
+                                <i className="control-button next" onClick={e=>this.changeMusic(e,"next")}></i>
                             </div>
                             <div className="control-volume-control">
                                 <i className="control-button volume"></i>
