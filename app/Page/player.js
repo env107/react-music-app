@@ -137,7 +137,7 @@ class Player extends Component{
         return (
             <div className="Player-Page">
             <div className="Cover-Box">
-                        <img src={cover} alt={title} className="CoverImage rorate-img-action" />
+                        <Link to="/List"><img src={cover} alt={title} className="CoverImage rorate-img-action" /></Link>
                     </div>
                 <div className="Player-Panel">
                     
