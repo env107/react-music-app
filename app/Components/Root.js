@@ -1,7 +1,7 @@
-import React from 'React';
+import React from 'react';
 import Header from './Header/Header';
 import Player from "../Page/Player";
-import {data} from "../Config/Data";
+import {data} from "../Config/data";
 import MusicList from "../Page/MusicList";
 import url from "url";
 import {BrowserRouter as Router,Route,Link,Switch} from "react-router-dom";

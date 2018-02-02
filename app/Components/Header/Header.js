@@ -1,4 +1,4 @@
-import React from 'React';
+import React from 'react';
 import './Header.less';
 
 class Header extends React.Component{
